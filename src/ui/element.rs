@@ -23,7 +23,9 @@ impl GeneralUI {
         // keyboard
         ui.separator();
         ui.label("Keyboard");
-        horizontal_text_field(ui, "Keyboard layout", &mut state.keyboard.layout);
+        horizontal_text_field(ui, "Layout", &mut state.keyboard.layout);
+        horizontal_text_field(ui, "Variant", &mut state.keyboard.variant);
+        horizontal_text_field(ui, "Toggle", &mut state.keyboard.toggle);
 
         // Show errors
         if ui.button("Validate field").clicked() {
