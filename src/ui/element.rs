@@ -2,11 +2,24 @@ use crate::state::State;
 
 use eframe::egui;
 
-pub fn horizontal_text_field(ui: &mut egui::Ui, label: &str, string_var: &mut String) {
-    ui.horizontal(|ui| {
-        ui.label(format!("{}: ", label));
-        ui.add(egui::TextEdit::singleline(string_var));
-    });
+pub fn horizontal_text_field(
+    ui: &mut egui::Ui,
+    label: &str,
+    hover_text: &str,
+    string_var: &mut String,
+) {
+    if hover_text.is_empty() {
+        ui.horizontal(|ui| {
+            ui.label(format!("{}: ", label))
+                .on_hover_text(format!("{}", hover_text));
+            ui.add(egui::TextEdit::singleline(string_var));
+        });
+    } else {
+        ui.horizontal(|ui| {
+            ui.label(format!("{}: ", label));
+            ui.add(egui::TextEdit::singleline(string_var));
+        });
+    }
 }
 
 pub struct GeneralUI;
@@ -18,14 +31,19 @@ impl GeneralUI {
         ui.label("interactive-sections"); // todo
 
         // locale
-        horizontal_text_field(ui, "Locale", &mut state.locale);
+        horizontal_text_field(
+            ui,
+            "Locale",
+            "Use for determining Date & Time",
+            &mut state.locale,
+        );
 
         // keyboard
         ui.separator();
         ui.label("Keyboard");
-        horizontal_text_field(ui, "Layout", &mut state.keyboard.layout);
-        horizontal_text_field(ui, "Variant", &mut state.keyboard.variant);
-        horizontal_text_field(ui, "Toggle", &mut state.keyboard.toggle);
+        horizontal_text_field(ui, "Layout", "", &mut state.keyboard.layout);
+        horizontal_text_field(ui, "Variant", "", &mut state.keyboard.variant);
+        horizontal_text_field(ui, "Toggle", "", &mut state.keyboard.toggle);
 
         // Show errors
         if ui.button("Validate field").clicked() {
