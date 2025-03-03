@@ -1,6 +1,13 @@
 use crate::state::State;
-use crate::validators::*;
+
 use eframe::egui;
+
+pub fn horizontal_text_field(ui: &mut egui::Ui, label: &str, string_var: &mut String) {
+    ui.horizontal(|ui| {
+        ui.label(format!("{}: ", label));
+        ui.add(egui::TextEdit::singleline(string_var));
+    });
+}
 
 pub struct GeneralUI;
 
@@ -11,19 +18,17 @@ impl GeneralUI {
         ui.label("interactive-sections"); // todo
 
         // locale
-        ui.horizontal(|ui| {
-            ui.label("Locale: ");
-            let locale_ui = ui.add(egui::TextEdit::singleline(&mut state.locale));
-            if locale_ui.lost_focus() {
-                if let Err(e) = validate_locale(&state.locale) {
-                    state.errors.push(e);
-                }
-            }
-        });
+        horizontal_text_field(ui, "Locale", &mut state.locale);
 
         // keyboard
+        ui.separator();
+        ui.label("Keyboard");
+        horizontal_text_field(ui, "Keyboard layout", &mut state.keyboard.layout);
 
         // Show errors
+        if ui.button("Validate field").clicked() {
+            state.validate_fields();
+        }
         ui.label("Errors: ");
         if !state.errors.is_empty() {
             for error in &state.errors {

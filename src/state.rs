@@ -1,3 +1,5 @@
+use crate::validators::*;
+
 #[derive(Debug)]
 pub struct State {
     pub version: i64,
@@ -13,8 +15,17 @@ pub struct State {
     pub timezone: String,
     pub updates: String,
 
-    pub show_errors: bool,
     pub errors: Vec<String>,
+}
+
+impl State {
+    pub fn validate_fields(&mut self) {
+        self.errors = Vec::new();
+        match validate_locale(&self.locale) {
+            Ok(_) => {}
+            Err(e) => self.errors.push(e),
+        }
+    }
 }
 
 impl Default for State {
@@ -32,7 +43,6 @@ impl Default for State {
             packages: Vec::new(),
             timezone: String::from("Europe/Amsterdam"),
             updates: String::new(),
-            show_errors: false,
             errors: Vec::new(),
         }
     }
