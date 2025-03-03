@@ -4,7 +4,9 @@ use crate::validators::*;
 pub struct State {
     pub version: i64,
     pub interactive_sections: Vec<String>,
+    pub early_commands: Vec<String>,
     pub locale: String,
+    pub refresh_installer: RefreshInstaller,
     pub keyboard: Keyboard,
     pub identity: Identity,
     pub codecs: bool,
@@ -33,7 +35,9 @@ impl Default for State {
         State {
             version: 1,
             interactive_sections: vec!["*".to_string()],
+            early_commands: Vec::new(),
             locale: String::from("en_US.UTF-8"),
+            refresh_installer: RefreshInstaller::default(),
             keyboard: Keyboard::default(),
             identity: Identity::default(),
             codecs: false,
@@ -44,6 +48,21 @@ impl Default for State {
             timezone: String::from("Europe/Amsterdam"),
             updates: String::new(),
             errors: Vec::new(),
+        }
+    }
+}
+
+#[derive(Debug)]
+pub struct RefreshInstaller {
+    pub update: bool,
+    pub channel: String,
+}
+
+impl Default for RefreshInstaller {
+    fn default() -> Self {
+        RefreshInstaller {
+            update: false,
+            channel: "stable/ubuntu-$REL".to_string(),
         }
     }
 }

@@ -2,6 +2,8 @@ use crate::state::State;
 
 use eframe::egui;
 
+const OFFSET: f32 = 25.0;
+
 pub fn horizontal_text_field(
     ui: &mut egui::Ui,
     label: &str,
@@ -34,7 +36,7 @@ pub fn fill_vector_string(ui: &mut egui::Ui, label: &str, vec_var: &mut Vec<Stri
     });
     for i in 0..vec_var.len() {
         ui.horizontal(|ui| {
-            ui.add_space(25.0);
+            ui.add_space(OFFSET);
             ui.label("-");
             ui.text_edit_singleline(&mut vec_var[i]);
         });
@@ -52,6 +54,10 @@ impl GeneralUI {
         ui.separator();
         fill_vector_string(ui, "interactive-sections", &mut state.interactive_sections);
 
+        // early commands
+        ui.separator();
+        fill_vector_string(ui, "early commands", &mut state.early_commands);
+
         // locale
         ui.separator();
         horizontal_text_field(
@@ -59,6 +65,21 @@ impl GeneralUI {
             "Locale",
             "Use for determining Date & Time",
             &mut state.locale,
+        );
+
+        // refresh installer
+        ui.separator();
+        ui.label("Refresh installer")
+            .on_hover_text("Installer update to a new version in givenn channel");
+        ui.horizontal(|ui| {
+            ui.add_space(OFFSET);
+            ui.checkbox(&mut state.refresh_installer.update, "Update");
+        });
+        horizontal_text_field(
+            ui,
+            "Channel",
+            "Channel to check for updates",
+            &mut state.refresh_installer.channel,
         );
 
         // keyboard
