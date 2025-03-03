@@ -18,7 +18,9 @@ impl Default for App {
 impl eframe::App for App {
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
         egui::CentralPanel::default().show(ctx, |ui| {
-            GeneralUI::show(ui, &mut self.state);
+            egui::ScrollArea::vertical().show(ui, |ui| {
+                GeneralUI::show(ui, &mut self.state);
+            });
         });
     }
 }
