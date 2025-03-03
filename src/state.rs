@@ -3,7 +3,7 @@ pub struct State {
     pub version: i64,
     pub interactive_sections: Vec<String>,
     pub locale: String,
-    pub keyboards: Vec<Keyboard>,
+    pub keyboard: Keyboard,
     pub identity: Identity,
     pub codecs: bool,
     pub drivers: bool,
@@ -22,7 +22,7 @@ impl Default for State {
             version: 1,
             interactive_sections: Vec::new(),
             locale: String::from("en_US.UTF-8"),
-            keyboards: Vec::new(),
+            keyboard: Keyboard::default(),
             identity: Identity::default(),
             codecs: false,
             drivers: false,
@@ -38,9 +38,19 @@ impl Default for State {
 
 #[derive(Debug)]
 pub struct Keyboard {
-    pub keyboard_layout: String,
-    pub keyboard_variant: String,
-    pub keyboard_toggle: bool,
+    pub layout: String,
+    pub variant: String,
+    pub toggle: String,
+}
+
+impl Default for Keyboard {
+    fn default() -> Keyboard {
+        Keyboard {
+            layout: "us".to_string(),
+            variant: "".to_string(),
+            toggle: "".to_string(),
+        }
+    }
 }
 
 #[derive(Debug)]
