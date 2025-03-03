@@ -11,12 +11,15 @@ impl GeneralUI {
         ui.label("interactive-sections"); // todo
 
         // locale
-        let locale_ui = ui.add(egui::TextEdit::singleline(&mut state.locale));
-        if locale_ui.lost_focus() {
-            if let Err(e) = validate_locale(&state.locale) {
-                state.errors.push(e);
+        ui.horizontal(|ui| {
+            ui.label("Locale: ");
+            let locale_ui = ui.add(egui::TextEdit::singleline(&mut state.locale));
+            if locale_ui.lost_focus() {
+                if let Err(e) = validate_locale(&state.locale) {
+                    state.errors.push(e);
+                }
             }
-        }
+        });
 
         // keyboard
 
