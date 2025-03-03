@@ -178,6 +178,11 @@ impl GeneralUI {
         ui.checkbox(&mut state.oem, "Install OEM meta-packages")
             .on_hover_text("As installing an OEM meta-package can result in installing a certain kernel, specifying both a kernel with kernel and also specifying oem.install: true may lead to an install failure due to conflicting kernel requirements. When using oem.install, it is recommended to not specify a kernel.");
 
+        // packages
+        ui.separator();
+        ui.label("Packages");
+        fill_vector_string(ui, "Packages", &mut state.packages);
+
         // Show errors
         ui.separator();
         if ui.button("Validate field").clicked() {
