@@ -104,6 +104,15 @@ impl GeneralUI {
             &mut state.source.id,
         );
 
+        // proxy
+        ui.separator();
+        horizontal_text_field(
+            ui,
+            "Proxy",
+            "Proxy to configure during installation",
+            &mut state.proxy,
+        );
+
         // identity
         ui.separator();
         ui.label("Identity");
@@ -132,13 +141,14 @@ impl GeneralUI {
             &mut state.identity.password_hash,
         );
 
-        // proxy
+        // ubuntu pro token
         ui.separator();
+        ui.label("Ubuntu Pro");
         horizontal_text_field(
             ui,
-            "Proxy",
-            "Proxy to configure during installation",
-            &mut state.proxy,
+            "Ubuntu pro token",
+            "A contract token to attach to an existing Ubuntu Pro subscription",
+            &mut state.ubuntu_pro_token,
         );
 
         // codecs, drivers, oem
