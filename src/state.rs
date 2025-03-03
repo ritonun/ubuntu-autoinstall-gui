@@ -12,6 +12,7 @@ pub struct State {
     pub proxy: String,
     pub identity: Identity,
     pub ubuntu_pro_token: String,
+    pub ssh: Ssh,
     pub codecs: bool,
     pub drivers: bool,
     pub oem: bool,
@@ -46,6 +47,7 @@ impl Default for State {
             proxy: String::new(),
             identity: Identity::default(),
             ubuntu_pro_token: String::new(),
+            ssh: Ssh::default(),
             codecs: false,
             drivers: false,
             oem: true,
@@ -54,6 +56,23 @@ impl Default for State {
             timezone: String::from("Europe/Amsterdam"),
             updates: String::new(),
             errors: Vec::new(),
+        }
+    }
+}
+
+#[derive(Debug)]
+pub struct Ssh {
+    pub install_server: bool,
+    pub authorized_keys: Vec<String>,
+    pub allow_pw: bool,
+}
+
+impl Default for Ssh {
+    fn default() -> Self {
+        Ssh {
+            install_server: false,
+            authorized_keys: Vec::new(),
+            allow_pw: true,
         }
     }
 }

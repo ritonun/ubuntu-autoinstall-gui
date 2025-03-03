@@ -151,7 +151,26 @@ impl GeneralUI {
             &mut state.ubuntu_pro_token,
         );
 
+        // ssh
+        ui.separator();
+        ui.label("SSH");
+        ui.horizontal(|ui| {
+            ui.add_space(OFFSET);
+            ui.checkbox(&mut state.ssh.install_server, "Search drivers");
+        });
+        fill_vector_string(ui, "Autorized keys", &mut state.ssh.authorized_keys);
+        ui.horizontal(|ui| {
+            ui.add_space(OFFSET);
+            ui.checkbox(&mut state.ssh.allow_pw, "Allow pw");
+        });
+        if state.ssh.authorized_keys.is_empty() {
+            state.ssh.allow_pw = false;
+        } else {
+            state.ssh.allow_pw = true;
+        }
+
         // codecs, drivers, oem
+        ui.separator();
         ui.checkbox(&mut state.codecs, "Install codecs")
             .on_hover_text("Install the ubuntu-restricted-addons package");
         ui.checkbox(&mut state.drivers, "Install drivers")
