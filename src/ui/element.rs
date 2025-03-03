@@ -132,6 +132,15 @@ impl GeneralUI {
             &mut state.identity.password_hash,
         );
 
+        // proxy
+        ui.separator();
+        horizontal_text_field(
+            ui,
+            "Proxy",
+            "Proxy to configure during installation",
+            &mut state.proxy,
+        );
+
         // codecs, drivers, oem
         ui.checkbox(&mut state.codecs, "Install codecs")
             .on_hover_text("Install the ubuntu-restricted-addons package");
