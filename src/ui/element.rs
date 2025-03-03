@@ -18,12 +18,16 @@ impl GeneralUI {
             }
         }
 
+        // keyboard
+
         // Show errors
+        ui.label("Errors: ");
         if !state.errors.is_empty() {
-            ui.label("Errors: ");
             for error in &state.errors {
                 ui.colored_label(egui::Color32::RED, error);
             }
+        } else {
+            ui.colored_label(egui::Color32::GREEN, "All field are OK");
         }
     }
 }

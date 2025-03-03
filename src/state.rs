@@ -13,6 +13,7 @@ pub struct State {
     pub timezone: String,
     pub updates: String,
 
+    pub show_errors: bool,
     pub errors: Vec<String>,
 }
 
@@ -31,6 +32,7 @@ impl Default for State {
             packages: Vec::new(),
             timezone: String::from("Europe/Amsterdam"),
             updates: String::new(),
+            show_errors: false,
             errors: Vec::new(),
         }
     }
