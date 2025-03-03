@@ -1,6 +1,8 @@
 mod app;
 mod state;
 mod ui;
+mod utils;
+mod validators;
 
 use app::App;
 use eframe::NativeOptions;

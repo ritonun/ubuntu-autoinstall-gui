@@ -29,7 +29,7 @@ pub fn validate_locale(locale: &str) -> Result<(), String> {
     ];
 
     if !locales.contains(&locale) {
-        Err("Locale is not a possible value".to_string())
+        return Err("Locale is not a possible value".to_string());
     }
 
     Ok(())

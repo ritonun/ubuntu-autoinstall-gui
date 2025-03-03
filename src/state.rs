@@ -12,6 +12,8 @@ pub struct State {
     pub packages: Vec<String>,
     pub timezone: String,
     pub updates: String,
+
+    pub errors: Vec<String>,
 }
 
 impl Default for State {
@@ -29,6 +31,7 @@ impl Default for State {
             packages: Vec::new(),
             timezone: String::from("Europe/Amsterdam"),
             updates: String::new(),
+            errors: Vec::new(),
         }
     }
 }
