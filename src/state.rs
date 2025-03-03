@@ -8,6 +8,7 @@ pub struct State {
     pub locale: String,
     pub refresh_installer: RefreshInstaller,
     pub keyboard: Keyboard,
+    pub source: Source,
     pub identity: Identity,
     pub codecs: bool,
     pub drivers: bool,
@@ -39,6 +40,7 @@ impl Default for State {
             locale: String::from("en_US.UTF-8"),
             refresh_installer: RefreshInstaller::default(),
             keyboard: Keyboard::default(),
+            source: Source::default(),
             identity: Identity::default(),
             codecs: false,
             drivers: false,
@@ -48,6 +50,21 @@ impl Default for State {
             timezone: String::from("Europe/Amsterdam"),
             updates: String::new(),
             errors: Vec::new(),
+        }
+    }
+}
+
+#[derive(Debug)]
+pub struct Source {
+    pub search_drivers: bool,
+    pub id: String,
+}
+
+impl Default for Source {
+    fn default() -> Self {
+        Source {
+            search_drivers: true,
+            id: "ubuntu-desktop-minimal".to_string(),
         }
     }
 }

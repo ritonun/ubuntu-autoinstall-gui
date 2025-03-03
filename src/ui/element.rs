@@ -89,6 +89,21 @@ impl GeneralUI {
         horizontal_text_field(ui, "Variant", "", &mut state.keyboard.variant);
         horizontal_text_field(ui, "Toggle", "", &mut state.keyboard.toggle);
 
+        // source
+        ui.separator();
+        ui.label("Source")
+            .on_hover_text("Installer searches for available third-party drivers");
+        ui.horizontal(|ui| {
+            ui.add_space(OFFSET);
+            ui.checkbox(&mut state.source.search_drivers, "Search drivers");
+        });
+        horizontal_text_field(
+            ui,
+            "Id",
+            "Identifier of the source to install",
+            &mut state.source.id,
+        );
+
         // codecs, drivers, oem
         ui.checkbox(&mut state.codecs, "Install codecs")
             .on_hover_text("Install the ubuntu-restricted-addons package");
