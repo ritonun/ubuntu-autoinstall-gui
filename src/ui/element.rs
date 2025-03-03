@@ -104,6 +104,34 @@ impl GeneralUI {
             &mut state.source.id,
         );
 
+        // identity
+        ui.separator();
+        ui.label("Identity");
+        horizontal_text_field(
+            ui,
+            "Real name",
+            "Optionnal field",
+            &mut state.identity.realname,
+        );
+        horizontal_text_field(
+            ui,
+            "User name",
+            "User name to create",
+            &mut state.identity.username,
+        );
+        horizontal_text_field(
+            ui,
+            "Hostname",
+            "Hostname for the system",
+            &mut state.identity.hostname,
+        );
+        horizontal_text_field(
+            ui,
+            "Password HASHED",
+            "Hashed password, please see documentation",
+            &mut state.identity.password_hash,
+        );
+
         // codecs, drivers, oem
         ui.checkbox(&mut state.codecs, "Install codecs")
             .on_hover_text("Install the ubuntu-restricted-addons package");
