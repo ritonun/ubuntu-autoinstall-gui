@@ -22,15 +22,38 @@ pub fn horizontal_text_field(
     }
 }
 
-pub struct GeneralUI {}
+pub fn fill_vector_string(ui: &mut egui::Ui, label: &str, vec_var: &mut Vec<String>) {
+    ui.horizontal(|ui| {
+        ui.label(format!("{}", label));
+        if ui.button("+").clicked() {
+            vec_var.push(String::new());
+        }
+        if ui.button("-").clicked() {
+            vec_var.pop();
+        }
+    });
+    for i in 0..vec_var.len() {
+        ui.horizontal(|ui| {
+            ui.add_space(25.0);
+            ui.label("-");
+            ui.text_edit_singleline(&mut vec_var[i]);
+        });
+    }
+}
+
+pub struct GeneralUI;
 
 impl GeneralUI {
     pub fn show(ui: &mut egui::Ui, state: &mut State) {
         ui.heading("Ubuntu autoinstaller.yaml generator");
         ui.label(format!("autoinstaller version: {}", state.version));
-        ui.label("interactive-sections"); // todo
+
+        // interactive sections
+        ui.separator();
+        fill_vector_string(ui, "interactive-sections", &mut state.interactive_sections);
 
         // locale
+        ui.separator();
         horizontal_text_field(
             ui,
             "Locale",

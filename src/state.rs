@@ -32,7 +32,7 @@ impl Default for State {
     fn default() -> State {
         State {
             version: 1,
-            interactive_sections: Vec::new(),
+            interactive_sections: vec!["*".to_string()],
             locale: String::from("en_US.UTF-8"),
             keyboard: Keyboard::default(),
             identity: Identity::default(),
