@@ -60,6 +60,11 @@ impl State {
             Err(e) => self.errors.push(e),
             _ => {}
         }
+
+        match validate_passwd(&self.identity.password_hash) {
+            Err(e) => self.errors.push(e),
+            _ => {}
+        }
     }
 }
 

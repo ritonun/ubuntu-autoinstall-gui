@@ -129,3 +129,13 @@ pub fn validate_refresh_install(refresh_installer: &RefreshInstaller) -> Result<
     }
     Ok(())
 }
+
+pub fn validate_passwd(passwd: &String) -> Result<(), String> {
+    if passwd.len() != 106 {
+        return Err(
+            "Password is not valid. Please check documentation or use mkpasswd --method=SHA-512 to convert your password".to_string(),
+        );
+    }
+
+    Ok(())
+}
