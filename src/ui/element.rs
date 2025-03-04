@@ -165,9 +165,9 @@ impl GeneralUI {
             ui.checkbox(&mut state.ssh.allow_pw, "Allow pw");
         });
         if state.ssh.authorized_keys.is_empty() {
-            state.ssh.allow_pw = false;
-        } else {
             state.ssh.allow_pw = true;
+        } else {
+            state.ssh.allow_pw = false;
         }
 
         // codecs, drivers, oem
