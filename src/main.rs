@@ -1,5 +1,6 @@
 mod app;
 mod generator_yaml;
+mod reader;
 mod state;
 mod ui;
 mod utils;

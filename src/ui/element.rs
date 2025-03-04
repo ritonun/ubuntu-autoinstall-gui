@@ -1,9 +1,11 @@
-use std::io::Write;
+use std::io::{Read, Write};
 
 use crate::generator_yaml;
+use crate::reader;
 use crate::state::State;
 
 use eframe::egui;
+use rfd::FileDialog;
 
 const OFFSET: f32 = 25.0;
 
@@ -51,6 +53,19 @@ pub struct GeneralUI;
 impl GeneralUI {
     pub fn show(ui: &mut egui::Ui, state: &mut State) {
         ui.heading("Ubuntu autoinstaller.yaml generator");
+
+        // load a autoinstall.yaml file
+        ui.separator();
+        if ui.button("Load file").clicked() {
+            if let Some(path) = FileDialog::new().pick_file() {
+                let filepath = path.to_string_lossy().to_string();
+
+                let contents = reader::read_file(filepath.as_str());
+                reader::parse_yaml_to_state(contents, state);
+            }
+        }
+        ui.separator();
+
         ui.label(format!("autoinstaller version: {}", state.version));
 
         // interactive sections
