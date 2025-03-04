@@ -1,3 +1,4 @@
+use crate::state::RefreshInstaller;
 use crate::utils::{self, Validators};
 
 fn load_validators() -> Validators {
@@ -115,5 +116,16 @@ pub fn validate_interactive_sections(interactive_sections: &Vec<String>) -> Resu
         }
     }
 
+    Ok(())
+}
+
+pub fn validate_refresh_install(refresh_installer: &RefreshInstaller) -> Result<(), String> {
+    if refresh_installer.update {
+        if refresh_installer.channel.is_empty() {
+            return Err(
+                "Refresh Installer Channel field cannot be empty if update is checked".to_string(),
+            );
+        }
+    }
     Ok(())
 }

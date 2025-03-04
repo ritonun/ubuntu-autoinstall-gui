@@ -55,6 +55,11 @@ impl State {
             Err(e) => self.errors.push(e),
             _ => {}
         }
+
+        match validate_refresh_install(&self.refresh_installer) {
+            Err(e) => self.errors.push(e),
+            _ => {}
+        }
     }
 }
 
