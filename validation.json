@@ -464,6 +464,24 @@
     "zawgyi",
     "zgt"
   ],
+  "keyboard_toggle": [
+    "caps_toggle",
+    "toggle",
+    "rctrl_toggle",
+    "rshift_toggle",
+    "rwin_toggle",
+    "menu_toggle",
+    "alt_shift_toggle",
+    "ctrl_shift_toggle",
+    "ctrl_alt_toggle",
+    "alt_caps_toggle",
+    "lctrl_lshift_toggle",
+    "lalt_toggle",
+    "lctrl_toggle",
+    "lshift_toggle",
+    "lwin_toggle",
+    "sclk_toggle"
+  ],
   "sections": [
     "*",
     "locale",

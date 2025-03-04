@@ -35,6 +35,21 @@ impl State {
             Ok(_) => {}
             Err(e) => self.errors.push(e),
         }
+
+        match validate_keyboard_layout(&self.keyboard.layout) {
+            Err(e) => self.errors.push(e),
+            _ => {}
+        }
+
+        match validate_keyboard_variant(&self.keyboard.variant) {
+            Err(e) => self.errors.push(e),
+            _ => {}
+        }
+
+        match validate_keyboard_toggle(&self.keyboard.toggle) {
+            Err(e) => self.errors.push(e),
+            _ => {}
+        }
     }
 }
 

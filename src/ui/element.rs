@@ -192,6 +192,7 @@ impl GeneralUI {
         if !state.errors.is_empty() {
             for error in &state.errors {
                 ui.colored_label(egui::Color32::RED, error);
+                ui.label("");
             }
         } else {
             ui.colored_label(egui::Color32::GREEN, "All field are OK");

@@ -23,8 +23,65 @@ pub fn validate_locale(locale: &str) -> Result<(), String> {
     if !validators.locale.contains(&locale.to_string()) {
         let possible_values = get_vec_into_string(&validators.locale);
         return Err(format!(
-            "Locale value '{}' is not among the possible value, possible values are: {}",
+            "Locale value '{}' is not among the possible value, which are: {}",
             locale, possible_values
+        ));
+    }
+
+    Ok(())
+}
+
+pub fn validate_keyboard_layout(keyboard_layout: &str) -> Result<(), String> {
+    let validators = load_validators();
+
+    if !validators
+        .keyboard_layout
+        .contains(&keyboard_layout.to_string())
+    {
+        let possible_values = get_vec_into_string(&validators.keyboard_layout);
+        return Err(format!(
+            "Keyboard layout value '{}' is not among the possible value, which are: {}",
+            keyboard_layout, possible_values
+        ));
+    }
+
+    Ok(())
+}
+
+pub fn validate_keyboard_toggle(keyboard_toggle: &str) -> Result<(), String> {
+    if keyboard_toggle.is_empty() {
+        return Ok(());
+    }
+    let validators = load_validators();
+
+    if !validators
+        .keyboard_toggle
+        .contains(&keyboard_toggle.to_string())
+    {
+        let possible_values = get_vec_into_string(&validators.keyboard_toggle);
+        return Err(format!(
+            "Keyboard toggle value '{}' is not among the possible value, which are: {}",
+            keyboard_toggle, possible_values
+        ));
+    }
+
+    Ok(())
+}
+
+pub fn validate_keyboard_variant(keyboard_variant: &str) -> Result<(), String> {
+    if keyboard_variant.is_empty() {
+        return Ok(());
+    }
+    let validators = load_validators();
+
+    if !validators
+        .keyboard_variant
+        .contains(&keyboard_variant.to_string())
+    {
+        let possible_values = get_vec_into_string(&validators.keyboard_variant);
+        return Err(format!(
+            "Keyboard variant value '{}' is not among the possible value, which are: {}",
+            keyboard_variant, possible_values
         ));
     }
 

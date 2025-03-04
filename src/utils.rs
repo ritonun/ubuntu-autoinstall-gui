@@ -8,6 +8,7 @@ pub struct Validators {
     pub locale: Vec<String>,
     pub keyboard_layout: Vec<String>,
     pub keyboard_variant: Vec<String>,
+    pub keyboard_toggle: Vec<String>,
     pub sections: Vec<String>,
     pub source_id: Vec<String>,
 }
