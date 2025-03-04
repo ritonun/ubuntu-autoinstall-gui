@@ -50,6 +50,11 @@ impl State {
             Err(e) => self.errors.push(e),
             _ => {}
         }
+
+        match validate_source_id(&self.source.id) {
+            Err(e) => self.errors.push(e),
+            _ => {}
+        }
     }
 }
 

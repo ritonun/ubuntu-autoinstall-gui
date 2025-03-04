@@ -17,6 +17,20 @@ fn get_vec_into_string(vec: &Vec<String>) -> String {
     string
 }
 
+pub fn validate_source_id(source_id: &str) -> Result<(), String> {
+    let validators = load_validators();
+
+    if !validators.source_id.contains(&source_id.to_string()) {
+        let possible_values = get_vec_into_string(&validators.source_id);
+        return Err(format!(
+            "Source ID value '{}' is not among the possible value, which are: {}",
+            source_id, possible_values
+        ));
+    }
+
+    Ok(())
+}
+
 pub fn validate_locale(locale: &str) -> Result<(), String> {
     let validators = load_validators();
 
