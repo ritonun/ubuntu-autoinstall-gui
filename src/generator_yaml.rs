@@ -37,6 +37,15 @@ impl Yaml {
     }
 }
 
+fn write_install_checkbox(yaml: &mut Yaml, label: &str, condition: bool) {
+    if condition {
+        yaml.write_line(label.to_string());
+        yaml.increase_indent();
+        yaml.write_line("install: true".to_string());
+        yaml.decrease_indent();
+    }
+}
+
 pub fn write_yaml(state: &State) -> String {
     let mut yaml = Yaml::new();
     yaml.write_line(format!("version: {}", &state.version));
@@ -88,6 +97,49 @@ pub fn write_yaml(state: &State) -> String {
         yaml.write_line(format!("id: {}", &state.source.id));
         yaml.decrease_indent();
     }
+
+    if !&state.proxy.is_empty() {
+        yaml.write_line(format!("proxy: {}", &state.proxy));
+    }
+
+    if !&state.identity.username.is_empty() {
+        yaml.write_line("identity:".to_string());
+        yaml.increase_indent();
+
+        if !&state.identity.realname.is_empty() {
+            yaml.write_line(format!("realname: '{}'", &state.identity.realname));
+        }
+
+        yaml.write_line(format!("username: {}", &state.identity.username));
+        yaml.write_line(format!("password: '{}'", &state.identity.password_hash));
+        yaml.write_line(format!("hostname: {}", &state.identity.hostname));
+        yaml.decrease_indent();
+    }
+
+    if !&state.ubuntu_pro_token.is_empty() {
+        yaml.write_line("ubuntu-pro:".to_string());
+        yaml.increase_indent();
+        yaml.write_line(format!("token: {}", &state.ubuntu_pro_token));
+        yaml.decrease_indent();
+    }
+
+    yaml.write_line("ssh:".to_string());
+    yaml.increase_indent();
+    yaml.write_line(format!("install-server: {}", &state.ssh.install_server));
+    if state.ssh.allow_pw {
+        yaml.write_line("authorized-keys: []".to_string());
+        yaml.write_line("allow-pw: true".to_string());
+    } else {
+        yaml.write_vec("authorized-keys".to_string(), &state.ssh.authorized_keys);
+        yaml.write_line("allow-pw: false".to_string());
+    }
+    yaml.decrease_indent();
+
+    write_install_checkbox(&mut yaml, "codecs:", state.codecs);
+    write_install_checkbox(&mut yaml, "drivers:", state.drivers);
+    write_install_checkbox(&mut yaml, "oem:", state.oem);
+
+    yaml.write_vec("packages:".to_string(), &state.packages);
 
     yaml.text
 }
