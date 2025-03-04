@@ -1,4 +1,4 @@
-use std::{fs::File, io::Read};
+use std::io::Read;
 use yaml_rust::YamlLoader;
 
 use crate::state::State;
@@ -17,7 +17,19 @@ pub fn parse_yaml_to_state(contents: String, state: &mut State) {
     let yaml = &yaml_content[0];
 
     // parse
-    if let Some(version) = yaml["version"].as_i64() {
+    if let Some(version) = yaml["autoinstall"]["version"].as_i64() {
         state.version = version;
+        println!("Version: {} ", version);
+    }
+
+    if let Some(_) = yaml["autoinstall"]["refresh-installer"].as_hash() {
+        if let Some(update) = yaml["autoinstall"]["refresh-installer"]["update"].as_bool() {
+            state.refresh_installer.update = update;
+            println!("refresh_installer: {} ", update);
+        }
+        if let Some(channel) = yaml["autoinstall"]["refresh-installer"]["channel"].as_str() {
+            state.refresh_installer.channel = channel.to_string();
+            println!("refresh_installer: {} ", channel);
+        }
     }
 }
