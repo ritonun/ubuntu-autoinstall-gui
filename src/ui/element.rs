@@ -1,3 +1,4 @@
+use crate::generator_yaml;
 use crate::state::State;
 
 use eframe::egui;
@@ -196,6 +197,12 @@ impl GeneralUI {
             }
         } else {
             ui.colored_label(egui::Color32::GREEN, "All field are OK");
+        }
+
+        // generate yaml film
+        if ui.button("Generate YAML").clicked() {
+            let output = generator_yaml::write_yaml(&state);
+            println!("{}", output);
         }
     }
 }
