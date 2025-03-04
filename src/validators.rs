@@ -1,35 +1,26 @@
-pub fn validate_locale(locale: &str) -> Result<(), String> {
-    let locales = [
-        "C",
-        "C.UTF-8",
-        "en_AG",
-        "en_AG.UTF-8",
-        "en_AU.UTF-8",
-        "en_BW.UTF-8",
-        "en_CA.UTF-8",
-        "en_DK.UTF-8",
-        "en_GB.UTF-8",
-        "en_HK.UTF-8",
-        "en_IE.UTF-8",
-        "en_IL",
-        "en_IL.UTF-8",
-        "en_IN",
-        "en_IN.UTF-8",
-        "en_NG",
-        "en_NG.UTF-8",
-        "en_NZ.UTF-8",
-        "en_PH.UTF-8",
-        "en_SG.UTF-8",
-        "en_US.UTF-8",
-        "en_ZA.UTF-8",
-        "en_ZM",
-        "en_ZM.UTF-8",
-        "en_ZW.UTF-8",
-        "POSIX",
-    ];
+use crate::utils::{self, Validators};
 
-    if !locales.contains(&locale) {
-        return Err("Locale value is not among the possible value".to_string());
+fn load_validators() -> Validators {
+    let filepath = "validation.json";
+    match utils::load_validators_from_file(filepath) {
+        Ok(validators) => return validators,
+        Err(e) => panic!("Failed to load validator file {} due to: {}", filepath, e),
+    }
+}
+
+pub fn validate_locale(locale: &str) -> Result<(), String> {
+    let validators = load_validators();
+
+    if !validators.locale.contains(&locale.to_string()) {
+        let mut possible_values = String::new();
+        for ok_value in validators.locale {
+            possible_values += ok_value.as_str();
+            possible_values += ", ";
+        }
+        return Err(format!(
+            "Locale value is not among the possible value, possible values are: {}",
+            possible_values
+        ));
     }
 
     Ok(())
