@@ -31,6 +31,10 @@ impl State {
             Ok(_) => {}
             Err(e) => self.errors.push(e),
         }
+        match validate_interactive_sections(&self.interactive_sections) {
+            Ok(_) => {}
+            Err(e) => self.errors.push(e),
+        }
     }
 }
 
