@@ -1,3 +1,5 @@
+use std::io::Write;
+
 use crate::generator_yaml;
 use crate::state::State;
 
@@ -202,6 +204,19 @@ impl GeneralUI {
         // generate yaml film
         if ui.button("Generate YAML").clicked() {
             let output = generator_yaml::write_yaml(&state);
+            if let Some(path) = rfd::FileDialog::new()
+                .set_title("autoinstall.yaml")
+                .save_file()
+            {
+                let filepath = Some(path.to_string_lossy().to_string());
+                if let Ok(mut file) = std::fs::File::create(&path) {
+                    let _ = file.write_all(output.as_bytes());
+                } else {
+                    panic!("Failed to create/write to file");
+                }
+            } else {
+                panic!("Error with FileDialog");
+            }
             println!("{}", output);
         }
     }
